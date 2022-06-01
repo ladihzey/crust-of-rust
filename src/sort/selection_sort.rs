@@ -1,13 +1,13 @@
-pub fn sort<T: Ord>(arr: &mut [T]) -> &[T] {
-    for i in 0..arr.len() {
+pub fn sort<T: Ord>(array: &mut [T]) -> &[T] {
+    for i in 0..array.len() {
         let mut min = i;
-        for j in i + 1..arr.len() {
-            if arr[min] > arr[j] {
+        for j in i + 1..array.len() {
+            if array[min] > array[j] {
                 min = j;
             }
         }
-        arr.swap(i, min);
+        array.swap(i, min);
     }
 
-    arr
+    array
 }
