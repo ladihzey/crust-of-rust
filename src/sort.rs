@@ -1,10 +1,12 @@
 mod bubble_sort;
 mod selection_sort;
 mod insertion_sort;
+mod quick_sort;
 
 pub use bubble_sort::sort as bubble_sort;
 pub use selection_sort::sort as selection_sort;
 pub use insertion_sort::sort as insertion_sort;
+pub use quick_sort::sort as quick_sort;
 
 #[cfg(test)]
 mod tests {
@@ -16,6 +18,7 @@ mod tests {
     #[test_case(bubble_sort)]
     #[test_case(selection_sort)]
     #[test_case(insertion_sort)]
+    #[test_case(quick_sort)]
     fn should_tolerate_empty_array(sort: SortFunction) {
         assert_eq!(sort(&mut []), []);
     }
@@ -23,6 +26,7 @@ mod tests {
     #[test_case(bubble_sort)]
     #[test_case(selection_sort)]
     #[test_case(insertion_sort)]
+    #[test_case(quick_sort)]
     fn should_tolerate_single_item_array(sort: SortFunction) {
         assert_eq!(sort(&mut [1]), [1]);
     }
@@ -30,6 +34,7 @@ mod tests {
     #[test_case(bubble_sort)]
     #[test_case(selection_sort)]
     #[test_case(insertion_sort)]
+    #[test_case(quick_sort)]
     fn should_sort_array(sort: SortFunction) {
         assert_eq!(
             sort(&mut [123, 0, -100, 12, 25, 257, 1]),
