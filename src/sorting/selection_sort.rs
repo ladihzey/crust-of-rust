@@ -1,4 +1,4 @@
-pub fn sort<T: Ord>(array: &mut [T]) -> &[T] {
+pub fn sort<T: Ord>(array: &mut [T]) {
     for i in 0..array.len() {
         let mut min = i;
         for j in i + 1..array.len() {
@@ -8,6 +8,4 @@ pub fn sort<T: Ord>(array: &mut [T]) -> &[T] {
         }
         array.swap(i, min);
     }
-
-    array
 }

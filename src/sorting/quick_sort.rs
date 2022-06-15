@@ -1,9 +1,4 @@
-pub fn sort<T: Ord>(array: &mut [T]) -> &[T] {
-    sort_slice(array);
-    array
-}
-
-fn sort_slice<T: Ord>(slice: &mut [T]) {
+pub fn sort<T: Ord>(slice: &mut [T]) {
     let len = slice.len();
 
     if len < 2 {
@@ -11,8 +6,8 @@ fn sort_slice<T: Ord>(slice: &mut [T]) {
     }
 
     let partition_index = partition(slice);
-    sort_slice(&mut slice[0 .. partition_index]);
-    sort_slice(&mut slice[partition_index + 1 .. len])
+    sort(&mut slice[0 .. partition_index]);
+    sort(&mut slice[partition_index + 1 .. len])
 }
 
 fn partition<T: Ord>(slice: &mut [T]) -> usize {
