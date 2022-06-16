@@ -12,7 +12,6 @@ pub use quick_sort::sort as quick_sort;
 mod tests {
     use pretty_assertions::{assert_eq};
     use test_case::test_case;
-    use rand;
     use super::*;
 
     type SortFunction = fn(&mut [i32]);
@@ -59,8 +58,8 @@ mod tests {
         let mut vec2 = vec1.to_owned();
 
         sort(&mut vec1);
-        vec2.sort();
+        vec2.sort_unstable();
 
-        assert_eq!(vec1.eq(&vec2), true);
+        assert_eq!(vec1, vec2);
     }
 }
