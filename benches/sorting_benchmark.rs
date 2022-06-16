@@ -4,6 +4,8 @@ use criterion::{
     criterion_group,
     criterion_main,
     Criterion,
+    Throughput,
+    BenchmarkId,
 };
 use rand;
 
@@ -11,28 +13,63 @@ criterion_group!(benches, sorting_benchmarks);
 criterion_main!(benches);
 
 fn sorting_benchmarks(c: &mut Criterion) {
-    let mut vec = init_data(10000);
+    let mut group = c.benchmark_group("Sortings");
 
-    c.bench_function(
-        "bubble sort",
-        |b| b.iter(|| sorting::bubble_sort(&mut vec))
-    );
-    c.bench_function(
-        "insertion sort",
-        |b| b.iter(|| sorting::insertion_sort(&mut vec))
-    );
-    c.bench_function(
-        "selection sort",
-        |b| b.iter(|| sorting::selection_sort(&mut vec))
-    );
-    c.bench_function(
-        "quick sort",
-        |b| b.iter(|| sorting::quick_sort(&mut vec))
-    );
-    c.bench_function(
-        "default sort",
-        |b| b.iter(|| vec.sort_unstable())
-    );
+    for size in [128, 256, 512, 1024, 2048, 4096, 8192, 16384] {
+        let vec = init_data(size);
+
+        group.throughput(Throughput::Elements(size as u64));
+        group.bench_with_input(
+            BenchmarkId::new("bubble sort", size),
+            &vec,
+            |b, input| b.iter(|| {
+                let mut vec = input.to_owned();
+                sorting::bubble_sort(&mut vec)
+            }),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("insertion sort", size),
+            &vec,
+            |b, input| b.iter(|| {
+                let mut vec = input.to_owned();
+                sorting::bubble_sort(&mut vec)
+            }),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("selection sort", size),
+            &vec,
+            |b, input| b.iter(|| {
+                let mut vec = input.to_owned();
+                sorting::bubble_sort(&mut vec)
+            }),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("quick sort", size),
+            &vec,
+            |b, input| b.iter(|| {
+                let mut vec = input.to_owned();
+                sorting::bubble_sort(&mut vec)
+            }),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("std stable sort", size),
+            &vec,
+            |b, input| b.iter(|| {
+                let mut vec = input.to_owned();
+                vec.sort()
+            }),
+        );
+        group.bench_with_input(
+            BenchmarkId::new("std unstable sort", size),
+            &vec,
+            |b, input| b.iter(|| {
+                let mut vec = input.to_owned();
+                vec.sort_unstable()
+            }),
+        );
+    }
+
+    group.finish();
 }
 
 fn init_data(data_size: usize) -> Vec<i32> {
