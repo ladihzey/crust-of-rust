@@ -1,8 +1,8 @@
-pub fn sort<T: Ord>(array: &mut [T]) {
-    for i in 1..array.len() {
+pub fn sort<T: Ord>(arr: &mut [T]) {
+    for i in 1..arr.len() {
         let mut j = i;
-        while j > 0 && array[j - 1] > array[j] {
-            array.swap(j - 1, j);
+        while j > 0 && arr[j - 1] > arr[j] {
+            arr.swap(j - 1, j);
             j -= 1;
         }
     }
